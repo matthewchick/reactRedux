@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { selectSong } from '../actions';
+//https://redux.js.org/api/bindactioncreators
+import { bindActionCreators } from "redux";
 
 class SongList extends Component {
     renderList() {
@@ -32,7 +34,13 @@ const mapStateToProps = (state) => {   //get MyState from store
     return { songs: state.songs };
 }
 
-export default connect(mapStateToProps, { selectSong })(SongList);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({ selectSong }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SongList);
+
+//export default connect(mapStateToProps, { selectSong })(SongList);
 
 /*
 function connect() {
@@ -41,6 +49,7 @@ function connect() {
     }
 }
 connect ()();
+
 const mapDispatchToProps = dispatch => ({  // https://react-redux.js.org/using-react-redux/connect-mapdispatch
   setCurrentUser: user => dispatch(setCurrentUser(user))
 });
